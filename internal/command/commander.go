@@ -14,7 +14,9 @@ func ExecuteCommand(player *player.Player, act *act.Act, input string) {
 	switch commandName {
 	case "go":
 		GoCommand(player, act, params)
+	case "quit":
+		QuitCommand(player, act, params)
 	default:
-		console.SayLine("I don't know how to do that.")
+		console.SayLine("You don't know how to do that.")
 	}
 }

@@ -26,6 +26,11 @@ go.work.sum
 
 # VS Code local files
 *.code-workspace
+.vscode/
 
 # Build files
 build/
+
+# Save files
+*.save.json
+saves
