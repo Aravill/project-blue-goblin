@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "blue-goblin/internal/game"
 
 func main() {
-	fmt.Println("Hello, World!")
+	game.Start()
 }
