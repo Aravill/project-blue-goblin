@@ -11,6 +11,25 @@ type Player struct {
 	Items           []item.Item
 }
 
+func (player *Player) RemoveItem(itemId string) *item.Item {
+	for i, itm := range player.Items {
+		if itm.Id == itemId {
+			player.Items = append(player.Items[:i], player.Items[i+1:]...)
+			return &itm
+		}
+	}
+	return nil
+}
+
+func (player *Player) AddItem(item *item.Item) {
+	for _, itm := range player.Items {
+		if itm.Id == item.Id {
+			return
+		}
+	}
+	player.Items = append(player.Items, *item)
+}
+
 func (p *Player) MoveTo(location *location.Location) {
 	p.CurrentLocation = location.Id
 }
