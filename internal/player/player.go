@@ -1,10 +1,14 @@
 package player
 
-import "blue-goblin/internal/location"
+import (
+	"blue-goblin/internal/item"
+	"blue-goblin/internal/location"
+)
 
 type Player struct {
 	CurrentLocation string
 	Flags           []Flag
+	Items           []item.Item
 }
 
 func (p *Player) MoveTo(location *location.Location) {
