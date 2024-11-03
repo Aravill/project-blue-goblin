@@ -61,6 +61,7 @@ func Start() {
 func InitGameFromState(p *player.Player, state state.State) {
 	p.CurrentLocation = state.Player.CurrentLocation
 	p.Flags = state.Player.Flags
+	p.Items = state.Player.Items
 	console.SayLine("Game loaded successfully.")
 }
 
