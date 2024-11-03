@@ -2,6 +2,7 @@ package command
 
 import (
 	"blue-goblin/internal/act"
+	"blue-goblin/internal/audio"
 	"blue-goblin/internal/console"
 	"blue-goblin/internal/player"
 	"strings"
@@ -36,6 +37,7 @@ func UnlockCommand(player *player.Player, act *act.Act, params []string) {
 		return
 	} else {
 		player.RemoveItem(i.Id)
+		go audio.PlaySound("unlock-1")
 		console.SayLine("You unlock the " + exitName + " with " + keyName + ". The " + keyName + " has been removed from your bag.")
 	}
 }
