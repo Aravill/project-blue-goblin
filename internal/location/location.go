@@ -9,9 +9,9 @@ type Location struct {
 	Items       []*ItemOnLocation
 }
 
-func (location *Location) RemoveItem(itemId string) *item.Item {
+func (location *Location) RemoveItem(itemName string) *item.Item {
 	for i, itemOnLoc := range location.Items {
-		if itemOnLoc.Item.Id == itemId {
+		if itemOnLoc.Item.Name == itemName {
 			location.Items = append(location.Items[:i], location.Items[i+1:]...)
 			return itemOnLoc.Item
 		}
