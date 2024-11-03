@@ -1,6 +1,7 @@
 package state
 
 import (
+	"blue-goblin/internal/act"
 	"blue-goblin/internal/player"
 	"encoding/json"
 	"os"
@@ -8,8 +9,8 @@ import (
 
 const saveDir = "saves"
 
-func SaveGame(saveName string, player player.Player) error {
-	var state = NewState(saveName, player)
+func SaveGame(saveName string, player player.Player, act act.Act) error {
+	var state = NewState(saveName, player, act)
 	data, err := json.MarshalIndent(state, "", "  ")
 	if err != nil {
 		return err

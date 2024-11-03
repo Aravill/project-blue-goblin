@@ -1,9 +1,10 @@
 package game
 
 import (
+	Act "blue-goblin/internal/act"
 	"blue-goblin/internal/command"
 	"blue-goblin/internal/console"
-	"blue-goblin/internal/player"
+	Player "blue-goblin/internal/player"
 	"blue-goblin/internal/state"
 	"blue-goblin/internal/world"
 	"fmt"
@@ -14,9 +15,9 @@ const defaultSaveName = "slot-1"
 
 func Start() {
 	// Set up the game control objects
-	var p = player.Player{}
+	var player = Player.Player{}
 	// This should load the particular act or the whole world, rn it's just a workaround
-	var act = world.LoadWorld()
+	var act Act.Act
 	// Initial narration
 	console.SayLine("Welcome to Blue Goblin!")
 
@@ -33,15 +34,15 @@ func Start() {
 				fmt.Println("Failed to load game:", err)
 				return
 			}
-			InitGameFromState(&p, state)
+			InitGameFromState(&player, &act, state)
 		} else {
-			InitNewGame(&p)
+			InitNewGame(&player, &act)
 		}
 	} else {
-		InitNewGame(&p)
+		InitNewGame(&player, &act)
 	}
 
-	console.SayLine(act.GetLocation(p.CurrentLocation).GetFullDescription())
+	console.SayLine(act.GetLocation(player.CurrentLocation).GetFullDescription())
 	for {
 		// Get the player's input
 		var input, error = console.Listen()
@@ -50,28 +51,33 @@ func Start() {
 			return
 		}
 		// Handle the command
-		command.ExecuteCommand(&p, &act, input)
+		command.ExecuteCommand(&player, &act, input)
 		// Check if the player is quitting
-		if p.HasFlag(player.Quitting) {
-			Quit(p)
+		if player.HasFlag(Player.Quitting) {
+			Quit(player, act)
 		}
 	}
 }
 
-func InitGameFromState(p *player.Player, state state.State) {
-	p.CurrentLocation = state.Player.CurrentLocation
-	p.Flags = state.Player.Flags
+func InitGameFromState(player *Player.Player, act *Act.Act, state state.State) {
+	player.CurrentLocation = state.Player.CurrentLocation
+	player.Flags = state.Player.Flags
+	act.Id = state.Act.Id
+	act.Locations = state.Act.Locations
 	console.SayLine("Game loaded successfully.")
 }
 
-func InitNewGame(p *player.Player) {
-	p.CurrentLocation = "act-one:start"
-	p.Flags = []player.Flag{}
+func InitNewGame(player *Player.Player, act *Act.Act) {
+	player.CurrentLocation = "act-one:start"
+	player.Flags = []Player.Flag{}
+	var loaded = world.LoadWorld()
+	act.Id = loaded.Id
+	act.Locations = world.LoadWorld().Locations
 	console.SayLine("Starting a new game.")
 }
 
-func Quit(p player.Player) {
-	p.RemoveFlag(player.Quitting)
-	state.SaveGame(defaultSaveName, p)
+func Quit(player Player.Player, act Act.Act) {
+	player.RemoveFlag(Player.Quitting)
+	state.SaveGame(defaultSaveName, player, act)
 	os.Exit(0)
 }
