@@ -19,6 +19,15 @@ func (location *Location) RemoveItem(itemName string) *item.Item {
 	return nil
 }
 
+func (location *Location) GetItem(itemName string) *item.Item {
+	for _, itemOnLoc := range location.Items {
+		if itemOnLoc.Item.Name == itemName {
+			return itemOnLoc.Item
+		}
+	}
+	return nil
+}
+
 func (location *Location) GetExit(exitKeyword string) *Exit {
 	for _, e := range location.Exits {
 		if e.Keyword == exitKeyword {

@@ -30,6 +30,15 @@ func (player *Player) AddItem(item *item.Item) {
 	player.Items = append(player.Items, *item)
 }
 
+func (player *Player) GetItem(itemName string) *item.Item {
+	for _, itm := range player.Items {
+		if itm.Name == itemName {
+			return &itm
+		}
+	}
+	return nil
+}
+
 func (p *Player) MoveTo(location *location.Location) {
 	p.CurrentLocation = location.Id
 }

@@ -20,6 +20,8 @@ func ExecuteCommand(player *player.Player, act *act.Act, input string) {
 		TakeCommand(player, act, params)
 	case "inventory":
 		InventoryCommand(player, act, params)
+	case "inspect":
+		InspectCommand(player, act, params)
 	default:
 		console.SayLine("You don't know how to do that.")
 	}

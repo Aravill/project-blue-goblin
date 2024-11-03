@@ -21,7 +21,4 @@ func InventoryCommand(player *player.Player, act *act.Act, params []string) {
 		}
 	}
 	console.SayLine(fullDescription)
-	for _, i := range player.Items {
-		console.Say(i.Name)
-	}
 }
