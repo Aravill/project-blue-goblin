@@ -6,9 +6,9 @@ import (
 )
 
 type State struct {
-	Id     string
-	Player player.Player
-	Act    act.Act
+	Id     string        `json:"id"`
+	Player player.Player `json:"player"`
+	Act    act.Act       `json:"act"`
 }
 
 func NewState(saveName string, p player.Player, a act.Act) State {

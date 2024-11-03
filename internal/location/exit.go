@@ -8,11 +8,11 @@ type Lock struct {
 	Status      bool   `json:"status"`
 }
 type Exit struct {
-	Id          string
-	Description string
-	Keyword     string
-	Destination string
-	Lock        *Lock `json:"lock"`
+	Id          string `json:"id"`
+	Description string `json:"description"`
+	Keyword     string `json:"keyword"`
+	Destination string `json:"destination"`
+	Lock        *Lock  `json:"lock"`
 }
 
 func (l *Lock) Unlock(item *Item.Item) bool {
