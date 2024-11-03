@@ -1,6 +1,7 @@
 package act
 
 import (
+	"blue-goblin/internal/item"
 	"blue-goblin/internal/location"
 )
 
@@ -29,6 +30,16 @@ func LoadActOne() Act {
 				Description: "There is a door to the south.",
 				Keyword:     "south",
 				Destination: "act-one:start",
+			},
+		},
+		Items: []*location.ItemOnLocation{
+			{
+				Item: &item.Item{
+					Id:          "act-one:end:coin",
+					Name:        "coin",
+					Description: "A shiny coin.",
+				},
+				Description: "A shiny coin is on the floor.",
 			},
 		},
 	})
