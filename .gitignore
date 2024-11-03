@@ -30,6 +30,8 @@ go.work.sum
 
 # Build files
 build/
+blue-goblin*
+blue-goblin_*
 
 # Save files
 *.save.json
