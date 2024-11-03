@@ -1,15 +1,20 @@
 package state
 
-import "blue-goblin/internal/player"
+import (
+	"blue-goblin/internal/act"
+	"blue-goblin/internal/player"
+)
 
 type State struct {
 	Id     string
 	Player player.Player
+	Act    act.Act
 }
 
-func NewState(saveName string, player player.Player) State {
+func NewState(saveName string, p player.Player, a act.Act) State {
 	return State{
 		Id:     saveName,
-		Player: player,
+		Player: p,
+		Act:    a,
 	}
 }
