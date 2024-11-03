@@ -14,6 +14,10 @@ func GoCommand(player *player.Player, act *act.Act, params []string) {
 		console.SayLine("You cannot go that way.")
 		return
 	}
+	if exit.Lock.Status {
+		console.SayLine(exit.Lock.Description)
+		return
+	}
 	var destination = act.GetLocation(exit.Destination)
 	console.SayLine("You go " + target + ".")
 	player.MoveTo(destination)

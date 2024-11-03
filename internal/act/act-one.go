@@ -17,6 +17,21 @@ func LoadActOne() Act {
 				Description: "There is a door to the north.",
 				Keyword:     "north",
 				Destination: "act-one:end",
+				Lock: &location.Lock{
+					Description: "The door is locked with a heavy rusty padlock.",
+					KeyId:       "act-one:start:rusty-key",
+					Status:      true,
+				},
+			},
+		},
+		Items: []*location.ItemOnLocation{
+			{
+				Item: &item.Item{
+					Id:          "act-one:start:rusty-key",
+					Name:        "rusty key",
+					Description: "A worn rusty key",
+				},
+				Description: "A rusty key lies on a table in the corner of the room.",
 			},
 		},
 	})
