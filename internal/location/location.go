@@ -3,10 +3,10 @@ package location
 import "blue-goblin/internal/item"
 
 type Location struct {
-	Id          string
-	Description string
-	Exits       []*Exit
-	Items       []*ItemOnLocation
+	Id          string            `json:"id"`
+	Description string            `json:"description"`
+	Exits       []*Exit           `json:"exits"`
+	Items       []*ItemOnLocation `json:"items"`
 }
 
 func (location *Location) RemoveItem(itemName string) *item.Item {

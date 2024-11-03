@@ -6,9 +6,9 @@ import (
 )
 
 type Player struct {
-	CurrentLocation string
-	Flags           []Flag
-	Items           []item.Item
+	CurrentLocation string      `json:"currentLocation"`
+	Flags           []Flag      `json:"flags"`
+	Items           []item.Item `json:"items"`
 }
 
 func (player *Player) RemoveItem(itemId string) *item.Item {

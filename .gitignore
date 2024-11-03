@@ -33,6 +33,9 @@ build/
 blue-goblin*
 blue-goblin_*
 
+# Log files
+__debug*
+
 # Save files
 *.save.json
 saves
