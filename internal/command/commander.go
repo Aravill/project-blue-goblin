@@ -26,6 +26,8 @@ func ExecuteCommand(player *player.Player, act *act.Act, input string) {
 		LookCommand(player, act, params)
 	case "unlock":
 		UnlockCommand(player, act, params)
+	case "help":
+		HelpCommand(player, act, params)
 	default:
 		console.SayLine("You don't know how to do that.")
 	}
