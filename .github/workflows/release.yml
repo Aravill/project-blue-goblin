@@ -21,6 +21,9 @@ jobs:
         with:
           go-version: '1.23'
 
+      - name: Install ALSA Development Libraries
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev
+
       - name: Build for Windows
         run: |
           GOOS=windows GOARCH=amd64 go build -o blue-goblin_${{ github.ref_name }}.exe
