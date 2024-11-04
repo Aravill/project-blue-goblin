@@ -4,9 +4,10 @@ import (
 	"blue-goblin/internal/act"
 	"blue-goblin/internal/console"
 	"blue-goblin/internal/player"
+	"strings"
 )
 
-func InventoryCommand(player *player.Player, act *act.Act, params []string) {
+func InventoryCommand(aliasUsed string, player *player.Player, act *act.Act, params []string) {
 	console.SayLine("You look into your backpack.")
 	if len(player.Items) == 0 {
 		console.SayLine("It is empty.")
@@ -21,4 +22,12 @@ func InventoryCommand(player *player.Player, act *act.Act, params []string) {
 		}
 	}
 	console.SayLine(fullDescription)
+}
+
+func InventoryCommandAliases() []string {
+	return []string{"inventory", "pockets"}
+}
+
+func InventoryCommandHelp() string {
+	return "[" + strings.Join(InventoryCommandAliases(), ", ") + "] - Look into your backpack."
 }

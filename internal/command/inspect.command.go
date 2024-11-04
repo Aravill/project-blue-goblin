@@ -7,9 +7,13 @@ import (
 	"strings"
 )
 
-func InspectCommand(player *player.Player, act *act.Act, params []string) {
+func InspectCommand(aliasUsed string, player *player.Player, act *act.Act, params []string) {
 	var location = act.GetLocation(player.CurrentLocation)
 	var itemName = strings.Join(params, " ")
+	if len(itemName) == 0 {
+		console.SayLine(aliasUsed + " what?")
+		return
+	}
 	var i = location.GetItem(itemName)
 	if i == nil {
 		i = player.GetItem(itemName)
@@ -19,4 +23,12 @@ func InspectCommand(player *player.Player, act *act.Act, params []string) {
 		}
 	}
 	console.SayLine(i.Description)
+}
+
+func InspectCommandAliases() []string {
+	return []string{"inspect", "examine"}
+}
+
+func InspectCommandHelp() string {
+	return "[" + strings.Join(InspectCommandAliases(), ", ") + "]" + " {item} - Examine an item."
 }
