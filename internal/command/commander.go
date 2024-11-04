@@ -66,5 +66,5 @@ func HelpCommand(aliasUsed string, player *player.Player, act *act.Act, params [
 	for _, command := range commandDictionary {
 		helpText += command.Doc + "\n"
 	}
-	console.SayLine(helpText)
+	console.Say(helpText)
 }
