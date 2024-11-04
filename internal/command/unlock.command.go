@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func UnlockCommand(player *player.Player, act *act.Act, params []string) {
+func UnlockCommand(aliasUsed string, player *player.Player, act *act.Act, params []string) {
 	// unlock {exitName} with {keyName}
 	var location = act.GetLocation(player.CurrentLocation)
 	var exit = location.GetExit(params[0])
@@ -40,4 +40,12 @@ func UnlockCommand(player *player.Player, act *act.Act, params []string) {
 		go audio.PlaySound("unlock-1")
 		console.SayLine("You unlock the " + exitName + " with " + keyName + ". The " + keyName + " has been removed from your bag.")
 	}
+}
+
+func UnlockCommandAliases() []string {
+	return []string{"unlock"}
+}
+
+func UnlockCommandHelp() string {
+	return "[" + strings.Join(UnlockCommandAliases(), ", ") + "]" + " {object} with {key} - Unlock an object with a key."
 }

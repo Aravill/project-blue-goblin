@@ -7,28 +7,64 @@ import (
 	"strings"
 )
 
+type CommandRecord struct {
+	Aliases []string
+	Handler func(string, *player.Player, *act.Act, []string)
+	Doc     string
+}
+
+var commandDictionary = []CommandRecord{
+	{Aliases: GoCommandAliases(), Handler: GoCommand, Doc: GoCommandHelp()},
+	{Aliases: QuitCommandAliases(), Handler: QuitCommand, Doc: QuitCommandHelp()},
+	{Aliases: TakeCommandAliases(), Handler: TakeCommand, Doc: TakeCommandHelp()},
+	{Aliases: InventoryCommandAliases(), Handler: InventoryCommand, Doc: InventoryCommandHelp()},
+	{Aliases: InspectCommandAliases(), Handler: InspectCommand, Doc: InspectCommandHelp()},
+	{Aliases: LookCommandAliases(), Handler: LookCommand, Doc: LookCommandHelp()},
+	{Aliases: UnlockCommandAliases(), Handler: UnlockCommand, Doc: UnlockCommandHelp()},
+	{Aliases: HelpCommandAliases(), Handler: nil, Doc: HelpCommandHelp()},
+}
+
+var wordToCommand = make(map[string]CommandRecord)
+var initialized = false
+
+func PopulateMap() {
+	if initialized {
+		return
+	}
+	for _, record := range commandDictionary {
+		for _, alias := range record.Aliases {
+			wordToCommand[alias] = record
+		}
+	}
+	initialized = true
+}
+
 func ExecuteCommand(player *player.Player, act *act.Act, input string) {
+	PopulateMap()
 	var inputParts = strings.Split(input, " ")
 	var commandName = inputParts[0]
 	var params = inputParts[1:]
-	switch commandName {
-	case "go":
-		GoCommand(player, act, params)
-	case "quit":
-		QuitCommand(player, act, params)
-	case "take":
-		TakeCommand(player, act, params)
-	case "inventory":
-		InventoryCommand(player, act, params)
-	case "inspect":
-		InspectCommand(player, act, params)
-	case "look":
-		LookCommand(player, act, params)
-	case "unlock":
-		UnlockCommand(player, act, params)
-	case "help":
-		HelpCommand(player, act, params)
-	default:
+	var handler = wordToCommand[commandName].Handler
+	if handler == nil {
+		// Workaround for the help command
+		for _, alias := range HelpCommandAliases() {
+			if commandName == alias {
+				HelpCommand(commandName, player, act, params)
+				return
+			}
+		}
 		console.SayLine("You don't know how to do that.")
+		return
 	}
+	handler(commandName, player, act, params)
+
+}
+
+// This is here to avoid circular dependencies
+func HelpCommand(aliasUsed string, player *player.Player, act *act.Act, params []string) {
+	var helpText = "You can use the following commands:\n"
+	for _, command := range commandDictionary {
+		helpText += command.Doc + "\n"
+	}
+	console.SayLine(helpText)
 }
